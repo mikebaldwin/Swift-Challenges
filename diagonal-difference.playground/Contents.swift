@@ -25,17 +25,15 @@ let testCase3 = [
 ]
 
 func diagonalDifference(arr: [[Int]]) -> Int {
-    var difference = 0
-    
     let primaryDiagonalIndices = buildPrimaryDiagonalIndices(matrix: arr)
     let secondaryDiagonalIndeces = buildSecondaryDiagonalIndices(from: primaryDiagonalIndices)
     
     let primaryDiagonalsSum = sumOfValues(in: arr, at: primaryDiagonalIndices)
     let secondaryDiagonalsSum = sumOfValues(in: arr, at: secondaryDiagonalIndeces)
     
-    difference = primaryDiagonalsSum - secondaryDiagonalsSum
+    let absoluteDifference = abs(primaryDiagonalsSum - secondaryDiagonalsSum)
     
-    return abs(difference)
+    return absoluteDifference
 }
 
 func buildPrimaryDiagonalIndices(matrix: [[Int]]) -> [Int] {
