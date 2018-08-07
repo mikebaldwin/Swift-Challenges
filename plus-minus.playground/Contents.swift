@@ -12,24 +12,28 @@ func plusMinus(arr: [Int]) -> Void {
         "negative" : 0,
         "zero" : 0
     ]
+    
     for number in arr {
-        if number > 0 {
+        switch number {
+        case _ where number > 0:
             if let count = lookup["positive"] {
                 lookup["positive"] = count + 1
             }
-        }
-        if number < 0 {
+        case _ where number < 0:
             if let count = lookup["negative"] {
                 lookup["negative"] = count + 1
             }
-        }
-        if number == 0 {
+        case _ where number == 0:
             if let count = lookup["zero"] {
                 lookup["zero"] = count + 1
             }
+        default:
+            break
         }
     }
+    
     let size = arr.count
+    
     if let positiveRatio = lookup["positive"] {
         print(String(format: "%.6f", Double(positiveRatio) / Double(size)))
     }
@@ -39,7 +43,6 @@ func plusMinus(arr: [Int]) -> Void {
     if let zeroRatio = lookup["zero"] {
         print(String(format: "%.6f", Double(zeroRatio) / Double(size)))
     }
-    
 }
 
 plusMinus(arr: sampleInput)
