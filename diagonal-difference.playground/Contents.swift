@@ -25,41 +25,44 @@ let testCase3 = [
 ]
 
 func diagonalDifference(arr: [[Int]]) -> Int {
-    var primaryDiagonalsSum = 0
-    var secondaryDiagonalsSum = 0
     var difference = 0
     
-    // construct primary diagonal indeces
+    let primaryDiagonalIndices = buildPrimaryDiagonalIndices(matrix: arr)
+    let secondaryDiagonalIndeces = buildSecondaryDiagonalIndices(from: primaryDiagonalIndices)
+    
+    let primaryDiagonalsSum = sumOfValues(in: arr, at: primaryDiagonalIndices)
+    let secondaryDiagonalsSum = sumOfValues(in: arr, at: secondaryDiagonalIndeces)
+    
+    difference = primaryDiagonalsSum - secondaryDiagonalsSum
+    
+    return abs(difference)
+}
+
+func buildPrimaryDiagonalIndices(matrix: [[Int]]) -> [Int] {
     var primaryDiagonalIndices: [Int] = []
-    for index in 0..<arr[0].count {
+    for index in 0..<matrix[0].count {
         primaryDiagonalIndices.append(index)
     }
-    
-    // construct secondar diagnonal indices
+    return primaryDiagonalIndices
+}
+
+func buildSecondaryDiagonalIndices(from primaryDiagonalIndices: [Int]) -> [Int] {
     var secondaryDiagonalIndeces: [Int] = []
     var reverseIndex = primaryDiagonalIndices.count - 1
     while reverseIndex >= 0 {
         secondaryDiagonalIndeces.append(primaryDiagonalIndices[reverseIndex])
         reverseIndex -= 1
     }
-    
-    // sum the primary diagonals
-    for row in 0..<arr.count {
-        let index = primaryDiagonalIndices[row]
-        primaryDiagonalsSum += arr[row][index]
+    return secondaryDiagonalIndeces
+}
+
+func sumOfValues(in matrix: [[Int]], at diagonals: [Int]) -> Int {
+    var diagonalsSum = 0
+    for row in 0..<matrix.count {
+        let index = diagonals[row]
+        diagonalsSum += matrix[row][index]
     }
-    
-    // sum the secondary diagonals
-    for row in 0..<arr.count {
-        let index = secondaryDiagonalIndeces[row]
-        secondaryDiagonalsSum += arr[row][index]
-    }
-    
-    // subtract the sums
-    difference = primaryDiagonalsSum - secondaryDiagonalsSum
-    
-    // return absolute value
-    return abs(difference)
+    return diagonalsSum
 }
 
 let testCase1Result = diagonalDifference(arr: testCase1)
