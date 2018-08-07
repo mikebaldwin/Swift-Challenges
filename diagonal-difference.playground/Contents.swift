@@ -46,21 +46,21 @@ func buildPrimaryDiagonalIndices(matrix: [[Int]]) -> [Int] {
 
 func buildSecondaryDiagonalIndices(from primaryDiagonalIndices: [Int]) -> [Int] {
     var secondaryDiagonalIndeces: [Int] = []
-    var reverseIndex = primaryDiagonalIndices.count - 1
-    while reverseIndex >= 0 {
-        secondaryDiagonalIndeces.append(primaryDiagonalIndices[reverseIndex])
-        reverseIndex -= 1
+    var index = primaryDiagonalIndices.count - 1 // we'll be traversing the array from bottom to top
+    while index >= 0 {
+        secondaryDiagonalIndeces.append(primaryDiagonalIndices[index])
+        index -= 1
     }
     return secondaryDiagonalIndeces
 }
 
 func sumOfValues(in matrix: [[Int]], at diagonals: [Int]) -> Int {
-    var diagonalsSum = 0
+    var sum = 0
     for row in 0..<matrix.count {
         let index = diagonals[row]
-        diagonalsSum += matrix[row][index]
+        sum += matrix[row][index]
     }
-    return diagonalsSum
+    return sum
 }
 
 let testCase1Result = diagonalDifference(arr: testCase1)
