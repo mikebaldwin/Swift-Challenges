@@ -37,6 +37,7 @@ func diagonalDifference(arr: [[Int]]) -> Int {
 }
 
 func buildPrimaryDiagonalIndices(matrix: [[Int]]) -> [Int] {
+    // Returns an array of contiguous Ints that map to the number of rows in the matrix
     var primaryDiagonalIndices: [Int] = []
     for index in 0..<matrix[0].count {
         primaryDiagonalIndices.append(index)
@@ -45,6 +46,7 @@ func buildPrimaryDiagonalIndices(matrix: [[Int]]) -> [Int] {
 }
 
 func buildSecondaryDiagonalIndices(from primaryDiagonalIndices: [Int]) -> [Int] {
+    // Reverses the array returned from buildPrimaryIndices()
     var secondaryDiagonalIndeces: [Int] = []
     var index = primaryDiagonalIndices.count - 1 // we'll be traversing the array from bottom to top
     while index >= 0 {
