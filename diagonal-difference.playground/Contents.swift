@@ -10,10 +10,13 @@ let testCase1 = [
 ]
 
 let testCase2 = [
-    [0, 24, 6],
-    [13, 12, 6],
-    [5, 4, 3]
-]
+    [0,  24, 6,  4,  12, 9],
+    [13, 12, 6,  33, 6,  22],
+    [5,  4,  3,  5,  0,  1],
+    [1,  9,  15, 12, 13, 16],
+    [0,  5,  22, 9,  13, 9],
+    [22, 5,  23, 23, 12, 6]
+] // 16
 
 let testCase3 = [
     [1, 2, 3],
@@ -21,15 +24,24 @@ let testCase3 = [
     [9, 8, 9]
 ]
 
-// TODO: extend to handle square matrices that are larger than 3 x 3
-
 func diagonalDifference(arr: [[Int]]) -> Int {
     var primaryDiagonalsSum = 0
     var secondaryDiagonalsSum = 0
     var difference = 0
     
-    let primaryDiagonalIndices = [0, 1, 2]
-    let secondaryDiagonalIndeces = [2, 1, 0]
+    // construct primary diagonal indeces
+    var primaryDiagonalIndices: [Int] = []
+    for index in 0..<arr[0].count {
+        primaryDiagonalIndices.append(index)
+    }
+    
+    // construct secondar diagnonal indices
+    var secondaryDiagonalIndeces: [Int] = []
+    var reverseIndex = primaryDiagonalIndices.count - 1
+    while reverseIndex >= 0 {
+        secondaryDiagonalIndeces.append(primaryDiagonalIndices[reverseIndex])
+        reverseIndex -= 1
+    }
     
     // sum the primary diagonals
     for row in 0..<arr.count {
@@ -54,7 +66,7 @@ let testCase1Result = diagonalDifference(arr: testCase1)
 assert(testCase1Result == 15)
 
 let testCase2Result = diagonalDifference(arr: testCase2)
-assert(testCase2Result == 8)
+assert(testCase2Result == 16)
 
 let testCase3Result = diagonalDifference(arr: testCase3)
 assert(testCase3Result == 2)
