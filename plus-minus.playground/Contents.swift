@@ -7,7 +7,7 @@ import UIKit
 let sampleInput = [-4, 3, -9, 0, 4, 1]
 
 func plusMinus(arr: [Int]) -> Void {
-    var lookup: [String: Int] = [
+    var totals: [String: Int] = [
         "positive" : 0,
         "negative" : 0,
         "zero" : 0
@@ -16,16 +16,16 @@ func plusMinus(arr: [Int]) -> Void {
     for number in arr {
         switch number {
         case _ where number > 0:
-            if let count = lookup["positive"] {
-                lookup["positive"] = count + 1
+            if let count = totals["positive"] {
+                totals["positive"] = count + 1
             }
         case _ where number < 0:
-            if let count = lookup["negative"] {
-                lookup["negative"] = count + 1
+            if let count = totals["negative"] {
+                totals["negative"] = count + 1
             }
         case _ where number == 0:
-            if let count = lookup["zero"] {
-                lookup["zero"] = count + 1
+            if let count = totals["zero"] {
+                totals["zero"] = count + 1
             }
         default:
             break
@@ -34,13 +34,13 @@ func plusMinus(arr: [Int]) -> Void {
     
     let size = arr.count
     
-    if let positiveRatio = lookup["positive"] {
+    if let positiveRatio = totals["positive"] {
         print(String(format: "%.6f", Double(positiveRatio) / Double(size)))
     }
-    if let negativeRatio = lookup["negative"] {
+    if let negativeRatio = totals["negative"] {
         print(String(format: "%.6f", Double(negativeRatio) / Double(size)))
     }
-    if let zeroRatio = lookup["zero"] {
+    if let zeroRatio = totals["zero"] {
         print(String(format: "%.6f", Double(zeroRatio) / Double(size)))
     }
 }
