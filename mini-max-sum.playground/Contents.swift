@@ -4,20 +4,47 @@ import UIKit
 
 // Mini-max Sum description: https://www.hackerrank.com/challenges/mini-max-sum/problem
 
-let sampleInput = [1, 2, 3, 4, 5]
+let sampleInput = [1, 2, 3, 5, 5]
 
 func miniMaxSum(arr: [Int]) -> Void {
     var minimumSum = 0
     var maximumSum = 0
+
+    var lowestFourNumbers: [Int] = []
+    var highestFourNumbers: [Int] = []
     
-    let sortedInput = arr.sorted()
+    // find the lowest numbers
+    for firstNumber in arr {
+        if arr.count == 4 {
+            break
+        }
+        for secondNumber in arr where firstNumber < secondNumber {
+            lowestFourNumbers.append(firstNumber)
+            break
+        }
+    }
     
-    for index in 0..<4 {
-        minimumSum += sortedInput[index]
+    // find the highest numbers
+    for firstNumber in arr {
+        if arr.count == 4 {
+            break
+        }
+        for secondNumber in arr where firstNumber > secondNumber {
+            highestFourNumbers.append(firstNumber)
+            break
+        }
     }
-    for index in 1..<5 {
-        maximumSum += sortedInput[index]
+    
+    // sum the minimums
+    for number in lowestFourNumbers {
+        minimumSum += number
     }
+
+    // sum the maximums
+    for number in highestFourNumbers {
+        maximumSum += number
+    }
+    
     print("\(minimumSum) \(maximumSum)")
 }
 
