@@ -13,8 +13,10 @@ func timeConversion(s: String) -> String {
     let components = twelveHourTime.split(separator: ":")
     var hourAsInt = Int(components[0])!
     
-    if isAfterNoon {
+    if isAfterNoon && hourAsInt < 12 {
         hourAsInt += 12
+    } else if isAfterNoon == false && hourAsInt == 12 {
+        hourAsInt = 0
     }
     
     let newHour = (hourAsInt < 10) ? "0" + String(hourAsInt) : String(hourAsInt)
@@ -23,3 +25,5 @@ func timeConversion(s: String) -> String {
 }
 
 timeConversion(s: "07:05:45PM")
+timeConversion(s: "12:00:00PM")
+timeConversion(s: "12:00:00AM")
