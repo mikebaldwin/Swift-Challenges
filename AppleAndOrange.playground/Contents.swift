@@ -6,34 +6,34 @@ import Foundation
 
 func countApplesAndOranges(startingPoint: Int, endingPoint: Int, appleTreeLocation: Int, orangeTreeLocation: Int, apples: [Int], oranges: [Int]) -> Void {
     
-    var appleLocations: [Int] = []
-    var orangeLocations: [Int] = []
-    var applesOnHouse = 0
-    var orangesOnHouse = 0
-   
-    // Get location of fallen apples
+    let appleLocations = locationsOfFallenFruit(fruits: apples, treeLocation: appleTreeLocation)
+    let orangeLocations = locationsOfFallenFruit(fruits: oranges, treeLocation: orangeTreeLocation)
     
-    for apple in apples {
-        appleLocations.append(appleTreeLocation + apple)
+    let applesOnHouse = fruitOnHouse(fruitLocations: appleLocations,
+                                     houseStart: startingPoint,
+                                     houseEnd: endingPoint)
+    let orangesOnHouse = fruitOnHouse(fruitLocations: orangeLocations,
+                                      houseStart: startingPoint,
+                                      houseEnd: endingPoint)
+    
+    print(applesOnHouse)
+    print(orangesOnHouse)
+}
+
+func locationsOfFallenFruit(fruits: [Int], treeLocation: Int) -> [Int] {
+    var locations: [Int] = []
+    for fruit in fruits {
+        locations.append(treeLocation + fruit)
     }
-    
-    // get location of fallen oranges
-    for orange in oranges {
-        orangeLocations.append(orangeTreeLocation + orange)
+    return locations
+}
+
+func fruitOnHouse(fruitLocations: [Int], houseStart: Int, houseEnd: Int) -> Int {
+    var count = 0
+    for fruit in fruitLocations where fruit >= houseStart && fruit <= houseEnd {
+        count += 1
     }
-    
-    // check to see if each fallen apple is within the range of startingPoint and endingPoint
-    for apple in appleLocations where apple >= startingPoint && apple <= endingPoint {
-        applesOnHouse += 1
-    }
-    
-    // check to see if each fallen orange is within the range of startingPoint and endingPoint
-    for orange in orangeLocations where orange >= startingPoint && orange <= endingPoint {
-        orangesOnHouse += 1
-    }
-    
-    // Print number of apples and oranges that landed within each point
-    print("\(applesOnHouse), \(orangesOnHouse)")
+    return count
 }
 
 countApplesAndOranges(startingPoint: 7, endingPoint: 11, appleTreeLocation: 5, orangeTreeLocation: 15, apples: [-2, 2, 1], oranges: [5, -6])
