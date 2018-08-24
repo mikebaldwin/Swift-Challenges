@@ -4,17 +4,16 @@ import Foundation
 
 // Apples and Oranges - https://www.hackerrank.com/challenges/apple-and-orange/problem
 
-func countApplesAndOranges(startingPoint: Int, endingPoint: Int, appleTreeLocation: Int, orangeTreeLocation: Int, apples: [Int], oranges: [Int]) -> Void {
-    
-    let appleLocations = locationsOfFallenFruit(fruits: apples, treeLocation: appleTreeLocation)
-    let orangeLocations = locationsOfFallenFruit(fruits: oranges, treeLocation: orangeTreeLocation)
+func countApplesAndOranges(s: Int, t: Int, a: Int, b: Int, apples: [Int], oranges: [Int]) -> Void {
+    let appleLocations = locationsOfFallenFruit(fruits: apples, treeLocation: a)
+    let orangeLocations = locationsOfFallenFruit(fruits: oranges, treeLocation: b)
     
     let applesOnHouse = fruitOnHouse(fruitLocations: appleLocations,
-                                     houseStart: startingPoint,
-                                     houseEnd: endingPoint)
+                                     houseStart: s,
+                                     houseEnd: t)
     let orangesOnHouse = fruitOnHouse(fruitLocations: orangeLocations,
-                                      houseStart: startingPoint,
-                                      houseEnd: endingPoint)
+                                      houseStart: s,
+                                      houseEnd: t)
     
     print(applesOnHouse)
     print(orangesOnHouse)
@@ -36,4 +35,4 @@ func fruitOnHouse(fruitLocations: [Int], houseStart: Int, houseEnd: Int) -> Int 
     return count
 }
 
-countApplesAndOranges(startingPoint: 7, endingPoint: 11, appleTreeLocation: 5, orangeTreeLocation: 15, apples: [-2, 2, 1], oranges: [5, -6])
+countApplesAndOranges(s: 7, t: 11, a: 5, b: 15, apples: [-2, 2, 1], oranges: [5, -6])
