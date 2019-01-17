@@ -9,27 +9,27 @@ import UIKit
 
 func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
     // Initialize Kangaroos
-    let firstKangaroo = Kangaroo(startingLocation: x1, metersPerJump: v1)
-    let secondKangaroo = Kangaroo(startingLocation: x2, metersPerJump: v2)
+    let firstKangaroo = Kangaroo(startingPosition: x1, metersPerJump: v1)
+    let secondKangaroo = Kangaroo(startingPosition: x2, metersPerJump: v2)
     
     // If the kangaroos have the same distance per jump and start in different locations, they'll never meet.
     let equalMetersPerJump = firstKangaroo.metersPerJump == secondKangaroo.metersPerJump
-    let differentStartingLocation = firstKangaroo.startingLocation != secondKangaroo.startingLocation
+    let differentStartingLocation = firstKangaroo.startingPosition != secondKangaroo.startingPosition
     if equalMetersPerJump && differentStartingLocation {
         return "NO"
     }
 
     // Identify the bigger and smaller jumpers so we can test for when to break the loop
-    let biggerJumper = identifyBiggerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
-    let smallerJumper = identifySmallerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
+    var biggerJumper = identifyBiggerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
+    var smallerJumper = identifySmallerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
     
     repeat {
         // Make the kangaroos jump
-        firstKangaroo.jump()
-        secondKangaroo.jump()
+        biggerJumper.jump()
+        smallerJumper.jump()
 
         // If both kangaroo's current location is equal, return "YES"
-        if firstKangaroo.currentPosition == secondKangaroo.currentPosition {
+        if biggerJumper.currentPosition == smallerJumper.currentPosition {
             return "YES"
         }
         // If the kangaroo with the bigger jump has a greater currentPosition than the other, return "NO"
@@ -39,19 +39,29 @@ func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
     return "NO"
 }
 
+protocol Jumps {
+    var metersPerJump: Int { get set }
+    mutating func jump()
+}
+
+protocol Locatable {
+    var startingPosition: Int { get set }
+    var currentPosition: Int { get set }
+}
+
 // Use Kangaroo type to simplify reasoning
-class Kangaroo {
-    var startingLocation: Int
+struct Kangaroo: Jumps, Locatable {
+    var startingPosition: Int
     var metersPerJump: Int
     var currentPosition: Int
     
-    init(startingLocation: Int, metersPerJump: Int) {
-        self.startingLocation = startingLocation
+    init(startingPosition: Int, metersPerJump: Int) {
+        self.startingPosition = startingPosition
         self.metersPerJump = metersPerJump
-        currentPosition = startingLocation
+        currentPosition = startingPosition
     }
     
-    func jump() {
+    mutating func jump() {
         currentPosition += metersPerJump
     }
 }
