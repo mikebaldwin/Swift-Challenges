@@ -8,16 +8,20 @@ import UIKit
  */
 
 func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
-    var firstKangaroo = Kangaroo(startingLocation: x1, metersPerJump: v1)
-    var secondKangaroo = Kangaroo(startingLocation: x2, metersPerJump: v2)
+    let firstKangaroo = Kangaroo(startingLocation: x1, metersPerJump: v1)
+    let secondKangaroo = Kangaroo(startingLocation: x2, metersPerJump: v2)
     
+    let biggerJumper = identifyBiggerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
+    let smallerJumper = identifySmallerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
+    
+    // If the kangaroos have the same distance per jump and start in different locations, they'll never meet.
+    let equalMetersPerJump = firstKangaroo.metersPerJump == secondKangaroo.metersPerJump
+    let differentStartingLocation = firstKangaroo.startingLocation != secondKangaroo.startingLocation
+    if equalMetersPerJump && differentStartingLocation {
+        return "NO"
+    }
+
     repeat {
-        // If the kangaroos have the same distance per jump and start in different locations, they'll never meet.
-        let equalMetersPerJump = firstKangaroo.metersPerJump == secondKangaroo.metersPerJump
-        let differentStartingLocation = firstKangaroo.startingLocation != secondKangaroo.startingLocation
-        if equalMetersPerJump && differentStartingLocation {
-            return "NO"
-        }
         // Make the kangaroos jump
         firstKangaroo.jump()
         secondKangaroo.jump()
@@ -27,17 +31,13 @@ func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
             return "YES"
         }
         // If the kangaroo with the bigger jump has a greater currentPosition than the other, return "NO"
-        let biggerJumper = identifyBiggerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
-        let smallerJumper = identifySmallerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
-        
-        if biggerJumper.currentPosition > smallerJumper.currentPosition {
-            return "NO"
-        }
-    } while true
+    } while biggerJumper.currentPosition < smallerJumper.currentPosition
+
+    return "NO"
 }
 
 // Use Kangaroo type to simplify reasoning
-struct Kangaroo {
+class Kangaroo {
     var startingLocation: Int
     var metersPerJump: Int
     var currentPosition: Int
@@ -48,7 +48,7 @@ struct Kangaroo {
         currentPosition = startingLocation
     }
     
-    mutating func jump() {
+    func jump() {
         currentPosition += metersPerJump
     }
 }
