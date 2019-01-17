@@ -19,23 +19,28 @@ import Foundation
  */
 
 func staircase(n: Int) -> Void {
-    // Start at 1, because starting at 0 will print an empty string
+    // start a loop, iterating from 0 to n * n
     var i = 1
-    while i <= n {
-        guard i > 0 else { break }
-        var output = ""
-
-        for _ in 0..<n - i {
+    var row = 1
+    var offset: Int {
+        return (row - 1) * n
+    }
+    var output = ""
+    
+    // loop from 1 to the square of n
+    while i <= n * n {
+        if i - offset <= n - row {
             output += " "
-        }
-
-        for _ in 0..<i {
+        } else {
             output += "#"
         }
-
-        print(output)
+        if i - offset == n {
+            output += "\n"
+            row += 1
+        }
         i += 1
     }
+    print(output)
 }
 
 staircase(n: 6)
