@@ -29,12 +29,16 @@ func staircase(n: Int) -> Void {
     
     // loop from 1 to the square of n
     while i <= n * n {
-        if i - offset <= n - row {
+        let spacesInRow = n - row
+        let indexForRow = i - offset
+        let endOfRow = indexForRow == n
+        
+        if indexForRow <= spacesInRow {
             output += " "
         } else {
             output += "#"
         }
-        if i - offset == n {
+        if endOfRow == true {
             output += "\n"
             row += 1
         }
