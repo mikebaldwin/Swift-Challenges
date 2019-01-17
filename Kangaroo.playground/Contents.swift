@@ -8,11 +8,9 @@ import UIKit
  */
 
 func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
+    // Initialize Kangaroos
     let firstKangaroo = Kangaroo(startingLocation: x1, metersPerJump: v1)
     let secondKangaroo = Kangaroo(startingLocation: x2, metersPerJump: v2)
-    
-    let biggerJumper = identifyBiggerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
-    let smallerJumper = identifySmallerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
     
     // If the kangaroos have the same distance per jump and start in different locations, they'll never meet.
     let equalMetersPerJump = firstKangaroo.metersPerJump == secondKangaroo.metersPerJump
@@ -21,6 +19,10 @@ func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
         return "NO"
     }
 
+    // Identify the bigger and smaller jumpers so we can test for when to break the loop
+    let biggerJumper = identifyBiggerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
+    let smallerJumper = identifySmallerJumper(firstKangaroo: firstKangaroo, secondKangaroo: secondKangaroo)
+    
     repeat {
         // Make the kangaroos jump
         firstKangaroo.jump()
@@ -33,6 +35,7 @@ func kangaroo(x1: Int, v1: Int, x2: Int, v2: Int) -> String {
         // If the kangaroo with the bigger jump has a greater currentPosition than the other, return "NO"
     } while biggerJumper.currentPosition < smallerJumper.currentPosition
 
+    // The bigger jumper has passed the smaller jumper and they'll never meet.
     return "NO"
 }
 
